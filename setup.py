@@ -2,7 +2,7 @@ from distutils.core import setup, Extension
 from numpy import get_include as np_include
 
 src_dir='src/'
-src_files=['core.c','balance.c','bucketsort.c','ccgraph.c',
+src_files=['mesh_swig.i','balance.c','bucketsort.c','ccgraph.c',
            'coarsen.c','compress.c','debug.c',
            'estmem.c','fm.c','fortran.c','frename.c',
            'graph.c','initpart.c','kmetis.c','kvmetis.c',
@@ -24,8 +24,9 @@ setup(name='PyMeshPart',
       author_email='timo.betcke@gmail.com',
       packages=['pymeshpart'],
       ext_package='pymeshpart',
-      ext_modules=[Extension('core',
+      ext_modules=[Extension('_mesh',
                 src_files,
+                swig_opts=['-outdir','pymeshpart'],
                 include_dirs=['src/',np_include()]
                 )]
      )

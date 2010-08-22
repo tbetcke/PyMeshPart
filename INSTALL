@@ -1,3 +1,7 @@
 Use 'sh get_metis.sh' to download Metis (wget must be installed for this).
-Then build and install via 'python setup.py install'
+Then build and install via 
+
+python setup.py build_ext -i
+python setup.py install
+
 
