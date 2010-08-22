@@ -6,7 +6,19 @@ static PyObject *tri_mesh(PyObject *self, PyObject *args);
 /*static PyObject *tet_mesh(PyObject *self, PyObject *args); */
 
 static PyMethodDef coreMethods[] = {
-		{"tri_mesh", tri_mesh, METH_VARARGS}
+		{"tri_mesh", tri_mesh, METH_VARARGS,
+		"tri_mesh - Generate partitioning for triangle mesh\n\n \
+		 INPUT:\n \
+		 mesh   - A numpy array in numpy integer format defining the mesh\n \
+		 nn     - The number of nodes in the mesh\n \
+		 nparts - The number of desired partitions\n \
+		 \n \
+		 OUTPUT:\n \
+		 Tuple (epart,npart,edgecut)\n \
+		 epart   - Array containing partition ids of elements\n \
+		 npart   - Array containing partition ids of nodes\n \
+		 edgecut - Number of cuts created by the partitioning"
+		 }
 		/*{"tet_mesh", tet_mesh, METH_VARARGS}*/
 };
 
@@ -38,9 +50,18 @@ static PyObject *tri_mesh(PyObject *self, PyObject *args){
 	descr=mesh->descr;
 
 
-	if (mesh->nd!=2) return NULL;
-	if ((mesh->dimensions[1]%3!=0)||(mesh->dimensions[1]==0)) return NULL;
-	if (descr->type_num!=NPY_INT) return NULL;
+	if (mesh->nd!=2){
+		PyErr_SetString(PyExc_Exception,"Wrong mesh format");
+		return NULL;
+	}
+	if ((mesh->dimensions[1]%3!=0)||(mesh->dimensions[1]==0)){
+		PyErr_SetString(PyExc_Exception,"Wrong mesh format");
+		return NULL;
+	}
+	if (descr->type_num!=NPY_INT){
+		PyErr_SetString(PyExc_Exception,"Wrong mesh format");
+		return NULL;
+	}
 
 	ne=mesh->dimensions[0];
 	elmnts= (int*) PyArray_DATA(mesh);
