@@ -3,6 +3,8 @@
 
 void METIS_PartMeshDual(int *, int *, int *, int *, int *, int *, int *, int *, int *);
 void METIS_PartMeshNodal(int *, int *, int *, int *, int *, int *, int *, int *, int *);
+void METIS_EdgeND(int *, int *, int *, int *, int *, int *, int *);
+void METIS_NodeND(int *, int *, int *, int *, int *, int *, int *);
 
 
 #endif
